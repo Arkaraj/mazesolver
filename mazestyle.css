@@ -1,0 +1,50 @@
+/* Style sheet */
+
+#bn,#bn1.open{
+    display: inline;
+    border: 1px solid #7CFC00;
+    border-radius: 10px;
+    padding: 10px 20px;
+    background: transparent;
+    font-size:1rem;
+    text-transform: uppercase;
+    color:black;
+    margin: 0 100px;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+#bn:hover{
+    border-color:transparent ;
+    background: #00d778;
+    padding:10px 40px;
+}
+#bn1{
+    display: none;
+}
+#bn1:hover{
+    border-color:transparent ;
+    background: #fa4242;
+    padding:10px 40px;
+}
+.btns{
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 7.5vh;
+    letter-spacing: 1px;
+}
+#bt1,#bt2,#bt3,#bt4,#bt5{
+        border: none;
+        padding: 0.8em;
+        border-radius: 5px;
+        margin: 0 20px;
+    }
+footer{
+    background: url(grey-footer.png);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+}
