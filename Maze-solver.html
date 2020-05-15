@@ -11,11 +11,19 @@
 </head>
 <body>
     <center>
-    <p>MAZE-SOLVER:</p>
-    <canvas width="1000" height="600" id="maze"></canvas><br>
+    <p id="main">MAZE-SOLVER:</p>
+    <div id="name"></div>
+    <div id="fun">Dark Mode:</div>
+    <label  class="switch">
+        <input id="switch" onclick="drak()" type="checkbox">
+        <span class="slider round"></span>
+    </label>
+    <br>
+    <canvas width="920" height="576" id="maze"></canvas><br>
     <button id="bn" onclick="Solve()">Solve!</button>
     <button id="bn" onclick="Rst()">Reset</button>
     <button id="bn1" onclick="ClearPath()">Clear Path</button>
+
     <div class="btns">
         <button id="bt1" style="background-color:#00d778"></button>Start   
         <button id="bt2" style="background-color:#293D52"></button>Walls
@@ -23,7 +31,7 @@
         <button id="bt5" style="background-color:rgb(0,125,191)"></button>Visited Nodes
         <button id="bt4" style="background-color:#ff0000"></button>Finish   
     </div>
-    <p id="outcome" style="padding:0 20px"></p>
+    <p id="outcome"></p>
     </center>
     <footer>
         Contact: arkaraj2017@gmail.com<br><br>
