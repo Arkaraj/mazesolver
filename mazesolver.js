@@ -1,9 +1,13 @@
 //Js file
+//Comming Soon...
+//Labyrinth genarator through Prim's algorithm and Recursive Backtracking 
+
 var canvas = document.getElementById("maze");
 var ctx = canvas.getContext('2d');
 var ot = document.getElementById("outcome");
+let body = document.querySelector('body');
 
-var mheight = 600, mwidth = 1000;
+var mheight = 576, mwidth = 920;
 var tileRcount = 25, tileCcount = 40;
 // var tile = {h:20,w:20};
 var tileH = 20, tileW =20;
@@ -247,6 +251,7 @@ function Solve()
 
 function ClearPath()
 {
+    ot.innerHTML = "";
     for(var c = 0;c < tileCcount; c++)
     {
         for(var r =0;r < tileRcount; r++)
@@ -259,8 +264,45 @@ function ClearPath()
         }
     }
 }
-
+let swt = document.getElementById('switch');
+function drak()
+{
+    if(swt.checked)
+    {
+        canvas.className = "dark";
+        body.className = 'dark';
+    }
+    else
+    {
+        canvas.className = "";
+        body.className = '';
+    }
+}
 setTimeout(()=>{alert("Welcome! \nInstruction:\nTest your skills and form a maze by clicking on the tiles to form walls.\nUse your mouse/trackpad to click on the tile and right click and drag for selecting multiple tiles. Click Solve to find the shortest path and hit reset to work out on a new Maze pattern.\nNOTE:\nUse laptop or PC for full experience.\n Enjoy!!");},0); //Using arrow function
+
+setTimeout(() => {
+    if(confirm("Do you want Maze background to be dark?"))
+    {
+        canvas.className = "dark";
+        body.className = 'dark';
+        swt.checked = true;
+    }
+    else
+        swt.checked = false;
+},1);
+
+let usr = ["Scholar","Nobody","Gamer","User","Great mind","Person","Solver","Coder"];
+let rnd = Math.floor(Math.random()*usr.length);
+setTimeout(()=>{
+    let name = prompt("Enter your name","Enter");
+    if (name == null || name == "" || name == "Enter") {
+        name = usr[rnd]; //Gamer,person,User anything
+        document.getElementById('name').innerHTML = 'Welcome!'+' '+name;
+      } else {
+        document.getElementById('name').innerHTML = 'Welcome!'+' '+name; 
+      }
+},2);
+
 main();
 canvas.onmousedown = Clickwall; // This also works //canvas.addEventListener("mousedown",Clickwall);
 canvas.onmouseup = myUP;
