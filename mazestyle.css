@@ -7,14 +7,139 @@
     box-sizing: border-box;
     text-align: center;
 }
+/* The Instruction panel is from https://pathjs.herokuapp.com/# */
+
+#hide{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+}
+/* #hide.hid{
+  display: none;
+} */
+#panel, #crd {
+  position: fixed; /*absolute will also do*/
+  background-color:rgba(52,73,94,0.85);
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  cursor: default;
+  height:auto;
+  padding:10px;
+  width: 550px;
+  top: 3px;
+}
+
+#mydivheader {
+  font-size: 18px;
+  text-align: left;
+  color: #3CE78B;
+  width: 75%;
+  float: left;
+  margin-top: 5px;
+  /*height: 100%;*/
+  margin-bottom: 0;
+}
+#x {
+  float: right;
+}
+.close {
+  position: absolute;
+  right: 1.5rem;
+  top:0.5rem;
+  color: rgba(60,231,139,0.5);
+  float: right;
+  font-size: 2rem;
+  font-weight: 900;
+}
+/* Code Pen transformation */
+@keyframes spin { 
+  100% { 
+    -webkit-transform: rotate(90deg); 
+    transform:rotate(90deg); 
+  } 
+}
+.close:hover,
+.close:focus {
+    color: #3CE78B;
+    text-decoration: none;
+    animation:spin 500ms linear;
+    cursor: pointer;
+}
+
+.bullet {
+  font-size: 100%;
+  color: #3CE78B;
+  padding-right: 5px
+}
+#info {
+  text-align: left;
+  font-size: 1rem;
+  display: inline-block;
+  margin-bottom:0;
+}
+#toleft{
+  text-align: left;
+  margin-left:70px;
+}
+#bn.min{
+  float:left;
+  margin: 0;
+}
+
+.side#mydivheader{
+  color: whitesmoke;
+  text-transform: capitalize;
+}
+
+#crd{
+  display: none;
+}
+#crd.ctr{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 0px 5px 30vw;
+}
+#s1,#s2,#f1,#f2, input{
+  border: none;
+  background: transparent;
+  border-bottom:1px solid #00d778;
+  width: 200px;
+  margin:2px 0px 3px 10px;
+  outline: none;
+  color: whitesmoke;
+}
+#s1:focus,#s2:focus,#f1:focus,#f2:focus,input:focus{
+  border-bottom: 2px solid #2196F3;
+  font-size: 1rem;
+}
+.es#bn{
+  padding: 10px;
+  margin:4px 0;
+}
+.es#bn:hover{
+  padding: 10px;
+}
 @media only screen and (max-width: 600px) {
   * {
     /* max-width: 100%; */
-    font-size: 3vw;
+    font-size: 1rem;
+  }
+  #hide{
+    display: none;
+  }
+  .btns{
+    margin-right: -40vw;
   }
 }
 #main{
   margin: 0;
+  color:#3CE78B;
 }
 .switch {
     float: right;
@@ -63,9 +188,9 @@
   }
   
   input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
+    -webkit-transform: translateX(24px);
+    -ms-transform: translateX(24px);
+    transform: translateX(24px);
   }
   
   /* Rounded sliders */
@@ -82,14 +207,18 @@
 #maze{
     background: transparent;
 }
+center{
+  margin:8px;
+}
 body{
+    margin:8px 0px;
     font-family: "Roboto";
     background: #ffffff;
     color:#2D3246;
 }
 p::selection{
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-  background: #ff726f;
+  background: rgb(52,73,94);
 }
 div::selection{
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
@@ -160,6 +289,8 @@ footer{
     text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
     background: url(grey-footer.png);
     padding:20px;
+    border-radius: 20px;
+    border:2px solid tomato;
     text-align: center;
     color: #ffffff;
 }
