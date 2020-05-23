@@ -7,6 +7,7 @@ var ctx = canvas.getContext('2d');
 var ot = document.getElementById("outcome");
 let body = document.querySelector('body');
 
+
 var mheight = 576, mwidth = 920;
 var tileRcount = 25, tileCcount = 40;
 // var tile = {h:20,w:20};
@@ -14,6 +15,9 @@ var tileH = 20, tileW =20;
 
 var targetX = 0, targetY = 0;
 var clc = document.getElementById("bn1");
+
+// var stc = 0,str = 0;
+// var ftc = tileCcount-1,ftr = tileRcount-1;// 24,39
 
 var tiles = [];
 for(var c = 0;c < tileCcount; c++)
@@ -25,8 +29,35 @@ for(var c = 0;c < tileCcount; c++)
     }
 }
 tiles[0][0].state = 's'; // s for start
-tiles[tileCcount-1][tileRcount-1].state = "f";
-
+tiles[tileCcount-1][tileRcount-1].state = "f"; // f for finish
+function radsf()
+{
+    /*stc = Math.floor(Math.random()*24);
+    ftc = Math.floor(Math.random()*39);
+    str = Math.floor(Math.random()*39);
+    ftr = Math.floor(Math.random()*24);
+    */
+    var s1 = document.getElementById('s1').value;
+    var s2 = document.getElementById('s2').value;
+    var f1 = document.getElementById('f1').value;
+    var f2 = document.getElementById('f2').value;
+    if(s1 > 39 || s1 < 0 || s2 > 24 || s2 < 0 || f1 > 39 || f1 < 0 || f1 > 39 || f2 < 0) 
+    {
+        alert("Entered coordinates exceeded the limits!!");
+        Rst();
+        return;
+    }
+    for(var c = 0;c < tileCcount; c++)  //coloumns
+    {
+    tiles[c] = [];  //Creating a 2D array
+    for(var r = 0;r < tileRcount ; r++)   //rows
+        {
+            tiles[c][r] = {x:c*(tileW+3), y:r*(tileH+3), state:'e'}; // state is e for empty
+        }
+    }
+    tiles[parseInt(s1)][s2].state = 's'; // s for start
+    tiles[f1][f2].state = "f";
+}
 
 function clear()
 {
@@ -80,6 +111,10 @@ function Rst()
     tiles[tileCcount-1][tileRcount-1].state = "f";
 
     ot.innerHTML = '';
+    document.getElementById('s1').value = 0;
+    document.getElementById('s2').value = 0;
+    document.getElementById('f1').value = 39;
+    document.getElementById('f2').value = 24;
     console.clear();
 }
 
@@ -102,8 +137,9 @@ function main()    //kindda like the driver code for this file
 
 function Move(e)
 {
-    x = e.pageX - canvas.offsetLeft;
-    y = e.pageY - canvas.offsetTop;
+    let x = e.pageX - canvas.offsetLeft;
+    let y = e.pageY - canvas.offsetTop;
+
     
     for(var c = 0;c < tileCcount; c++){
         for(var r = 0;r < tileRcount; r++){
@@ -168,7 +204,9 @@ function Solve()
     // Path-finding Algorithm
     // Acknowledgement & inspiration gray utopia: https://minstem.com/ & https://pathjs.herokuapp.com/#
     clc.className = "open";
-    var aray = [[0, 0]];
+    var stc = parseInt(document.getElementById('s1').value);
+    var str = parseInt(document.getElementById('s2').value);
+    var aray = [[stc, str]]; //queue
     var xloc;
     var yloc;
     var pathFound = false;
@@ -220,17 +258,18 @@ function Solve()
         }
     }
     if (!pathFound) {
-        ot.innerHTML = 'No Solution';
+        ot.innerHTML = '✘ No Solution';
         console.log("Nah nice tough one though!!");
+        alert("✘ No solution!");
     }
     else {
-        ot.innerHTML = 'Solved!';
+        ot.innerHTML = '✔︎ Solved!';
         console.log("Solved :)");
         var path = tiles[xloc][yloc].state;
         var pathLength = path.length;
-        var currX = 0;
-        var currY = 0;
-        for (var i = 0; i < pathLength-1; i++) {
+        var currX = stc;
+        var currY = str;
+     for (var i = 0; i < pathLength-1; i++) {
         if (path.charAt(i+1) == 'u') {
             currY -= 1;
         }
@@ -247,6 +286,7 @@ function Solve()
         }
     }
 //ot.innerHTML = "COMINNG SOON...";
+// console.log(path);
 }
 
 function ClearPath()
@@ -264,7 +304,16 @@ function ClearPath()
         }
     }
 }
+
+function ShowC()
+{
+    var crd = document.getElementById('crd');
+    crd.style.display = 'flex';
+    crd.className = 'ctr';
+}
+
 let swt = document.getElementById('switch');
+//drak();
 function drak()
 {
     if(swt.checked)
@@ -278,7 +327,17 @@ function drak()
         body.className = '';
     }
 }
-setTimeout(()=>{alert("Welcome! \nInstruction:\nTest your skills and form a maze by clicking on the tiles to form walls.\nUse your mouse/trackpad to click on the tile and right click and drag for selecting multiple tiles. Click Solve to find the shortest path and hit reset to work out on a new Maze pattern.\nNOTE:\nUse laptop or PC for full experience.\n Enjoy!!");},0); //Using arrow function
+function detectMob() {
+    // var check = ( ( window.innerWidth <= 800 ) && ( window.innerHeight <= 600 ) );
+    //Stack overflow
+    if (typeof window.orientation !== 'undefined')
+    {    alert("Welcome! \nInstruction:\nTest your skills and form a maze by clicking on the tiles to form walls.\nUse your mouse/trackpad to click on the tile and right click and drag for selecting multiple tiles. Click Solve to find the shortest path and hit reset to work out on a new Maze pattern.\nNOTE:\nUse laptop or PC for full experience.\n Enjoy!!");
+}
+        
+  }
+// setTimeout(()=>{alert("Welcome! \nInstruction:\nTest your skills and form a maze by clicking on the tiles to form walls.\nUse your mouse/trackpad to click on the tile and right click and drag for selecting multiple tiles. Click Solve to find the shortest path and hit reset to work out on a new Maze pattern.\nNOTE:\nUse laptop or PC for full experience.\n Enjoy!!");},0); //Using arrow function
+
+setTimeout(detectMob,0);
 
 setTimeout(() => {
     if(confirm("Do you want Maze background to be dark?"))
@@ -289,7 +348,7 @@ setTimeout(() => {
     }
     else
         swt.checked = false;
-},1);
+},2);
 
 let usr = ["Scholar","Nobody","Gamer","User","Great mind","Person","Solver","Coder"];
 let rnd = Math.floor(Math.random()*usr.length);
@@ -298,14 +357,79 @@ setTimeout(()=>{
     if (name == null || name == "" || name == "Enter") {
         name = usr[rnd]; //Gamer,person,User anything
         document.getElementById('name').innerHTML = 'Welcome!'+' '+name;
-      } else {
+      }
+      else if(name == "Arkaraj")
+      {
+        document.getElementById('name').innerHTML = 'Welcome!'+' '+"Creator";
+        hidePanel('hide');
+      } 
+      else {
         document.getElementById('name').innerHTML = 'Welcome!'+' '+name; 
       }
-},2);
+},1);
 
 main();
 canvas.onmousedown = Clickwall; // This also works //canvas.addEventListener("mousedown",Clickwall);
 canvas.onmouseup = myUP;
+
+//This is from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_draggable for dragging an html element
+
+moveit("panel"); //whatever id is given in css position:absolute must be done
+
+
+function moveit(slide)
+{
+    dragElement(document.getElementById(slide));
+
+    function dragElement(elmnt) {
+    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    if (document.getElementById(elmnt.id + "header")) {
+        /* if present, the header is where you move the DIV from:*/
+        document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+    } else {
+        /* otherwise, move the DIV from anywhere inside the DIV:*/
+        elmnt.onmousedown = dragMouseDown;
+    }
+
+    function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
+    }
+
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // set the element's new position:
+        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    }
+
+    function closeDragElement() {
+        /* stop moving when mouse button is released:*/
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+    }
+}
+
+function hidePanel(hide)
+{
+    var hide = document.getElementById(hide);
+    hide.style.display = 'none';
+    //hide.className = 'hid';
+}
+
 
 //End!!
 //Arkaraj - 28/4/20
