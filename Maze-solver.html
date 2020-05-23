@@ -3,18 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maze-Solver</title>
+    <title>Maze Solver</title>
     <link rel="shortcut icon" href="mazeicnw.png" type="image/png">
     <!-- <link rel="apple-touch-icon" href="mazeicnw.png"> -->
     <!-- <style>#maze{background: black;}</style> -->
     <link rel="stylesheet" type="text/css" href="mazestyle.css">
 </head>
 <body>
+    <t id="hide">
+        <div id="panel">
+            <div id="mydivheader">
+                Instructions: 
+                <span id ="x" class="close" onclick="hidePanel('hide')">&times;</span>
+            </div>
+            <p id="info">
+                <span class="bullet">❂</span>
+                Welcome!
+                <br>
+                <span class="bullet">❂</span>Test your skills and form a maze by clicking on the tiles to form walls.<br>
+                <span class="bullet">❂</span>Use your mouse/trackpad to click on the tile and right click and drag for &nbsp;&nbsp;&nbsp;&nbsp;selecting multiple tiles. Click Solve to find the shortest path and hit &nbsp;&nbsp;&nbsp;&nbsp;reset to work out on a new Maze pattern.
+                <br>
+                <span class="bullet">❂</span>
+                NOTE:
+                <div id="toleft">
+                    Use laptop or PC for full experience.
+                    <br>
+                    Enjoy!!
+                    <br>
+                    || You can move around this Instructions Panel ||
+                </div>
+            </p>
+        </div>
+    </t>
     <center>
-    <p id="main">MAZE-SOLVER:</p>
+    <p id="main">MAZE SOLVER:</p>
+    <button type="submit" class="min" id="bn" onclick="ShowC()">Change Starting and Ending Co-ordinates</button>
+    <div id="crd">
+        <div id="mydivheader">Edit Coordinates Panel
+        <span id ="x" class="close" onclick="hidePanel('crd')">&times;</span>
+        </div>
+        <div id="mydivheader" class="side">Starting point:</div> 
+        <span>x: <input type="text" maxlength="2" value="0" name="" id="s1"></span>
+        <span>y: <input type="text" maxlength="2" value="0" name="" id="s2"></span>
+        <br>
+        <div id="mydivheader" class="side">Finishing point:</div>
+        <span>x: <input type="text" maxlength="2" value="39" name="" id="f1"></span>
+        <span>y: <input type="text" maxlength="2" value="24" name="" id="f2"></span>
+        <button type="submit" class="es" id="bn" onclick="radsf()">Set Co-ordinates</button>
+        <div class="side" id="mydivheader">Note:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            x max value : 39
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            y max value : 24
+        </div>
+    </div>
     <div id="name"></div>
     <div id="fun">Dark Mode:</div>
-    <label  class="switch">
+    <label class="switch">
         <input id="switch" onclick="drak()" type="checkbox">
         <span class="slider round"></span>
     </label>
