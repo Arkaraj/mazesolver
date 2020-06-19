@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="mazeicnw.png" type="image/png">
+    <link rel="stylesheet" href="./mazestyle.css">
+    <title>Maze</title>
+</head>
+<body class="dark">
+    <t id="hide">
+        <div id="panel">
+            <div id="mydivheader">
+                Instructions: 
+                <span id ="x" class="close" onclick="hidePanel('hide')">&times;</span>
+            </div>
+            <div id="infor">
+                <p id="info">
+                    <span class="bullet">◉</span>
+                    Welcome!
+                    <br>
+                    <span class="bullet">◉</span>This Page is not fully made yet!! So there can be addition is &nbsp;&nbsp;&nbsp;the future!!<br>
+                    <span class="bullet">◉</span>Try Solving the Maze by reaching to the finish point in the &nbsp;&nbsp;&nbsp;given time duration. Use your arrow keys or w,a,s,d keys to &nbsp;&nbsp;&nbsp;move through the maze.
+                    <br>
+                    <span class="bullet">◉</span>The Maze Generation is done through <span id="ze">Recursive &nbsp;&nbsp;&nbsp;&nbsp;Backtracking Algorithm.</span></span>
+                    <br>
+                    <span class="bullet">◉</span>You can also Save it as an Image in JPEG/PNG format and &nbsp;&nbsp;&nbsp;print it, and Solve later!!
+                    <br>
+                    <span class="bullet">◉</span>To adjust the Screen press "<img src="https://img.icons8.com/office/20/000000/ctrl.png" alt="Ctrl"> + −",  80% for full view.
+                    <br>
+                    <span class="bullet">◉</span>
+                    NOTE:
+                    <div id="toleft">
+                        Use laptop or PC for full experience.
+                        <br>
+                        Enjoy!!
+                        <br>
+                        Click Spacebar/Enter to get the Instruction Panel
+                        <br>
+                        || You can move around this Instructions Panel ||
+                    </div>
+                </p>
+            </div>
+        </div>
+    </t>
+    <center>
+        <h2>Solve MAZE</h2>
+        <a 
+        style=
+        "float: left;
+        background: white;
+        color: black;
+        cursor: pointer;
+        text-decoration: none;
+        " href="Maze-solver.html">
+        <img src="https://img.icons8.com/ios/24/000000/home-page.png" alt="Home Page"/>Home Page</a>
+        <br><br>
+        <div class='bgd'>
+            <span id="times"><span id="timer">Timer: 2:00</span></span>
+             <span id="cyr">Best Move: <span id="higsc"></span>0</span>
+            <span id='spac'>Moves: <span id="show">0</span></span>
+        </div>
+    <canvas id="maze" width="1420" height="740"></canvas>
+    <div class="btns2">
+        <button id="bt1" style="background-color:green"></button>Start   
+        <button id="bt4" style="background-color:#ff0000"></button>Finish   
+    </div>
+    </center>
+    <button id ="dwn" onclick="Save()"><img src="https://img.icons8.com/ios/24/000000/downloads-folder.png"/>Download as Image</button>
+    <hr>
+    <h3>Coming Soon...</h3>
+    <hr>
+    <footer>
+        Contact: arkaraj2017@gmail.com<br><br>
+        ©2020 ARKARAJ
+    </footer>
+</body> 
+<script src="./recmaze.js"></script>
+</html>
