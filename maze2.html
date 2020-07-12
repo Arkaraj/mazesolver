@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./Styles/mazestyle.css">
     <title>Maze</title>
 </head>
-<body class="dark">
+<body class="dark" style="max-width: 100%;">
     <t id="hide">
         <div id="panel">
             <div id="mydivheader">
@@ -39,6 +39,8 @@
                         <br>
                         Click <u>Enter</u> to get the Instruction Panel
                         <br>
+                        Click <u>m</u> to Mute the music
+                        <br>
                         || You can move around this Instructions Panel ||
                     </div>
                 </p>
@@ -49,7 +51,7 @@
                 <button id="prev" onclick="Nextpage()">▶︎</button>
             </div>
             <center>
-                <div id="pageno">1/4</div> 
+                <div id="pageno">1/5</div> 
             </center>
         </div>
         </div>
@@ -68,7 +70,50 @@
         <br>
         <h2 id="verdict">You Won</h2>
         <br>
+        <h4>||You can post your score below on comments or give your feedback||</h4>
         <h4>Click on the cross to close this Session</h4>
+        <div class="side" id="mydivheader">
+            <button id="ri" onclick="showCredits()" style="font-size: .8rem;">See Credits</button>
+        </div>
+    </div>
+    <div id="crde2">
+        <div id="mydivheader">Credits:
+        <div id="crde2header">Click here to move around</div>
+        <span id ="x" class="close" onclick="hidePanel('crde2')">&times;</span>
+        </div>
+        <marquee behavior="scroll" direction="up" scrollamount="3">
+            <!-- Marquee ins't working for Chrome. As its pretty out dated-->
+            <div id="mydivheader" class="side">Code:</div>
+            <br>
+            <img src="./Images/knight.gif" alt="Knight">
+            <p id="credit">Algorithm: <span id="ze">Recursive Backtracking.</span>
+            <p id="credit">Code By : ARKARAJ <br>
+            Git Hub: <a href="https://github.com/Arkaraj/mazesolver" target="_blank">https://github.com/Arkaraj/mazesolver</a></p>
+            <div id="mydivheader" class="side">Images:</div>
+            <br>
+            <p id="credit">
+                Most Images: <a href="https://www.pixilart.com" target="_blank">https://www.pixilart.com</a>  and &nbsp;&nbsp;&nbsp;<a href="https://opengameart.org/" target="_blank">https://opengameart.org/</a> <br>
+                <a href="https://www.shutterstock.com/" target="_blank">Shutterstock</a> and <a href="https://www.pinterest.com/" target="_blank">Pintrest</a>
+                <br>
+                <br>
+                Dragon from: <a href="https://www.pngitem.com/" target="_blank">https://www.pngitem.com/</a>
+                <br>
+                Lava Tile: <a href="https://www.instagram.com/ajaytitus24/?hl=en" target="_blank">Ajay Titus</a> 
+            </p>
+            <div id="mydivheader" class="side">Music:</div>
+            <br>
+            <p id="credit">
+                Most of the music is from: <a href="https://www.youtube.com/" target="_blank">YouTube</a>
+                <br>
+                Dragon background: Hollow Knight Boss Battle</p>
+            <div id="mydivheader" class="side">Special Mention:</div>
+            <br>
+            <p id="credit">Comments: Disqus
+                <br>
+                YouTube API
+            </p>
+        </marquee>
+        <p id="hrt">Made with ❤️ and JavaScript</p>
     </div>
     <div id="crdp" style="text-align: center;">
         <div id="mydivheader">Status:
@@ -108,25 +153,23 @@
     <canvas id="solveMaze" width="1420" height="740"></canvas>
     <div class="btns2">
         <button id="bt1" style="background:url(./Images/player.png)"></button>Start   
-        <button id="bt4" style="background-color:#ff0000"></button>Finish   
+        <button id="bt4" style="background:url(./Images/stairs.png)"></button>Finish   
     </div>
     </center>
     <button id ="dwn" onclick="Save()"><img src="https://img.icons8.com/ios/24/000000/downloads-folder.png"/>Download as Image</button>
+    <!-- This is a work on progress -->
+    <br>
+    <iframe width="0" height="0" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <!-- 560x315 -->
     <hr>
     <h3>Coming Soon...</h3>
     <hr>
     <div id="disqus_thread"></div>
     <script>
-
-    /**
-    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-    /*
     var disqus_config = function () {
-    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    this.page.url = "https://mazesolveark.herokuapp.com/maze2.html";  
+    this.page.identifier = "maze2.html"; 
     };
-    */
     (function() { // DON'T EDIT BELOW THIS LINE
     var d = document, s = d.createElement('script');
     s.src = 'https://https-mazesolveark-herokuapp-com-maze2-html.disqus.com/embed.js';

@@ -131,6 +131,12 @@
   color: whitesmoke;
   text-transform: capitalize;
 }
+#credit{
+  text-align: left;
+}
+p>a{
+  color: #00d778;
+}
 
 #crd,#crdp{
   display: none;
@@ -144,6 +150,11 @@
   z-index: 9;
   transform: translateX(30.5vw);
   /* margin: 5px 0px 5px 30vw; */
+}
+#hrt{
+  width: 100%;
+  border-radius: 10px;
+  background-color: #2D3246;
 }
 #crdheader,#crdeheader,#crde2header,#crdpheader{
   padding: 10px;
@@ -203,6 +214,10 @@
 }
 #crde.add,#crde2.mine,#crdp.used{
   top: 45%;
+}
+#crde2.mine{
+  z-index: 12;
+  top: 30%;
 }
 #ri,#dwn{
   float: right;

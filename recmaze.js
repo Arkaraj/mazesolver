@@ -45,11 +45,23 @@ treasure.src = "./Images/treasure.png";
 var healthIcn = new Image();
 healthIcn.src = "./Images/health.png";
 
+var healthAud = new Audio();
+healthAud.src = "./Audio/Health1.m4a";
+
 var bombIcn = new Image();
 bombIcn.src = "./Images/bomb.png";
 
+var bombAud = new Audio();
+bombAud.src = "./Audio/bomb.mp3";
+
 var pickaxeImg = new Image();
 pickaxeImg.src = "./Images/pickaxe.png";
+
+var axeAud = new Audio();
+axeAud.src = "./Audio/item_drop.wav";
+
+var breakAud = new Audio();
+breakAud.src = "./Audio/breakable_wall_hit_1.wav";
 
 var wallImg = new Image();
 wallImg.src = "./Images/wall.png";
@@ -63,17 +75,47 @@ wallImg4.src = "./Images/wall4.png";
 var pstar = new Image();
 pstar.src = "./Images/pstar.png";
 
+var pstaradu = new Audio();
+pstaradu.src = "./Audio/pstar.wav";
+
+var mapscr = new Image();
+mapscr.src = "./Images/scroll.png";
+
+var smoll = new Audio();
+smoll.src = "./Audio/scroll.wav";
+
 var lvti = new Image();
 lvti.src = "./Images/lava.png";
 
 var shoot = new Image();
 shoot.src = "./Images/shuriken.png";
 
+var shurikenAud = new Audio();
+shurikenAud.src = "./Audio/shoot.wav";
+
 var fireSpit = new Image();
 fireSpit.src = "./Images/fire_ball.png";
 
 var fireSpit2 = new Image();
 fireSpit2.src = "./Images/fire_ball2.png";
+
+var skullFire = new Image();
+skullFire.src = "./Images/blue_fire.png";
+
+var portalAud = new Audio();
+portalAud.src = "./Audio/Portal.m4a";
+
+var tchest = new Audio();
+tchest.src = "./Audio/tchest.wav";
+
+var keyaud = new Audio();
+keyaud.src = "./Audio/key.wav";
+
+var wall_move = new Audio();
+wall_move.src = "./Audio/wall_move.wav";
+
+var pauseaud = new Audio();
+pauseaud.src = "./Audio/pause.wav";
 
 //Behold the DRAGON!!
 //https://www.pngitem.com/
@@ -86,11 +128,39 @@ drwall.src = "./Images/drag_walls.png";
 var skull = new Image();
 skull.src = "./Images/skull.png";
 
+var skullbf = new Audio();
+skullbf.src = "./Audio/skull_fire.wav";
+
+var dHeart = new Image();
+dHeart.src = "./Images/dragonHeart.jpeg";
+
+var draco_roar = new Audio();
+draco_roar.src = "./Audio/draco_roar_01.wav";
+
+var dragfire = new Audio();
+dragfire.src = "./Audio/flamethrow.wav";
+
+var boss_audio = new Audio();
+boss_audio.src = "./Audio/Boss_Battle_1.wav";
+
+var victory = new Audio();
+victory.src = "./Audio/won.wav";
+
+let music = document.querySelector('iframe');
+let music_source = ""; //can be anything
+//https://www.youtube.com/embed/GXH64w5fiXc?autoplay=1&loop=1
+let music_sourceDummy = "";
+
+let muted = false;
+
 var drx = 240,dry = 360;
 var cdy = 20; //Should't 15*20...
+var cdx = 1160;
 var dheight = 360;
 var dv = 1;
-var eye = tr/2;
+var secondPhase = false;
+// var mouth = Math.floor(cdy/20)+8;
+
 
 for(var c = 0; c < tc; c++)
 {
@@ -109,6 +179,7 @@ tiles[currX][currY].state = 's';
 tiles[currX][currY].isvisited = true;
 tiles[tc-2][tr-2].state = 'f';
 
+let timeWin = true;
 var show = document.getElementById('show');
 show.innerHTML = 0;
 
@@ -176,10 +247,11 @@ ti.innerHTML = "Timer: "+ seconds+" sec";
             seconds--;
         } else {
             clearInterval(timer);
+            allStop();
             alert('You ran out of time');
             ti.innerHTML = 'Game Over';
-            gameWin = false;
-            verdict.innerHTML = "You Ran Out Of Time";
+            gameWin = true;
+            timeWin = false;
         }
 }
 function loop() {
@@ -194,6 +266,7 @@ function checktime()
 {
     if(!isPanel)
     {
+        //music.src = music_source;
         loop();
     }
 else{
@@ -256,6 +329,20 @@ function drawrect(x,y,w,h,st = 'e')
         ctx.closePath();
         return; 
     }
+    else if(st == 'drh')
+    {
+        ctx.beginPath();
+        ctx.drawImage(dHeart,0,0,20,20,x,y,w,h);
+        ctx.closePath();
+        return; 
+    }
+    else if(st == 'scr')
+    {
+        ctx.beginPath();
+        ctx.drawImage(mapscr,0,0,20,20,x,y,w,h);
+        ctx.closePath();
+        return; 
+    }
     else if(st == 'sku')
     {
         ctx.beginPath();
@@ -274,6 +361,13 @@ function drawrect(x,y,w,h,st = 'e')
     {
         ctx.beginPath();
         ctx.drawImage(fireSpit2,0,0,20,20,x,y,w,h);
+        ctx.closePath();
+        return; 
+    }
+    else if(st == 'blf')
+    {
+        ctx.beginPath();
+        ctx.drawImage(skullFire,0,0,20,20,x,y,w,h);
         ctx.closePath();
         return; 
     }
@@ -338,7 +432,8 @@ function drawrect(x,y,w,h,st = 'e')
                     ctx.drawImage(key,0,0,20,20,x,y,w,h);
                     ctx.closePath();
                     return;
-                }else{
+                }
+                else{
                     ctx.beginPath();
                     ctx.drawImage(treasure,0,0,20,20,x,y,w,h);
                     ctx.closePath();
@@ -348,7 +443,18 @@ function drawrect(x,y,w,h,st = 'e')
                ctx.fillStyle = "#ff0000";  
             }
         }
-        else{
+        else if(lvl == 3)
+        {
+            if(!gotKey)
+            {
+                ctx.fillStyle = "#ff0000";
+            }else{
+                ctx.beginPath();
+                ctx.drawImage(stairs,0,0,20,20,x,y,w,h);
+                ctx.closePath();
+                return;
+            }
+        }else{
             ctx.beginPath();
             ctx.drawImage(stairs,0,0,20,20,x,y,w,h);
             ctx.closePath();
@@ -360,6 +466,13 @@ function drawrect(x,y,w,h,st = 'e')
     {
         ctx.beginPath();
         ctx.drawImage(pstar,0,0,20,20,x,y,w,h);
+        ctx.closePath();
+        return;
+    }
+    else if(st == 'key')
+    {
+        ctx.beginPath();
+        ctx.drawImage(key,0,0,20,20,x,y,w,h);
         ctx.closePath();
         return;
     }
@@ -439,7 +552,12 @@ function drawrect(x,y,w,h,st = 'e')
     }
     else
     {
-        ctx.fillStyle = "#00E172";//rgb(0,125,191)
+        if(!starEaten){
+            ctx.fillStyle = "#00E172";//rgb(0,125,191)   
+        }else{
+            ctx.fillStyle = "rgb(0,125,191)";
+        }
+        
     }
     ctx.beginPath();
     ctx.fillRect(x,y,w,h);
@@ -506,32 +624,62 @@ function draw()
                     drawrect(tiles[c][r].x,tiles[c][r].y,tileW,tileH,tiles[c][r].state);
                 }
             }
-
-            ctx.font = "30px Arial";//Arial
-            ctx.fillStyle = "Black";
-            ctx.fillText("Dragon Hp: ", 57*20+20, 34*20);
-            ctx.beginPath();
-            ctx.fillStyle = "#eee";
-            ctx.fillRect(58*20+10,35*20,230-3,15);
-            ctx.closePath();
-            ctx.beginPath();
-            ctx.fillStyle = dHealthColor;
-            ctx.fillRect(59*20 - 5,35*20 + 3,dHealth,8);
-            ctx.closePath();
+            if(!secondPhase)
+            {
+                ctx.font = "30px Arial";//Arial
+                ctx.fillStyle = "Black";
+                ctx.fillText("Dragon Hp: ", 57*20+20, 34*20);
+                ctx.beginPath();
+                ctx.fillStyle = "#eee";
+                ctx.fillRect(58*20+10,35*20,230-3,15);
+                ctx.closePath();
+                ctx.beginPath();
+                ctx.fillStyle = dHealthColor;
+                ctx.fillRect(59*20 - 5,35*20 + 3,dHealth,8);
+                ctx.closePath();
+            }else{
+                for(var c = tc-1; c < tc; c++)
+                {
+                    for(var r = 0;r < tr; r++)
+                    {
+                        drawrect(tiles[c][r].x,tiles[c][r].y,tileW,tileH,tiles[c][r].state);
+                    }
+                }
+                for(var c = tc-tm; c < tc; c++)//tc-tm = 58
+                {
+                    drawrect(tiles[c][tr-1].x,tiles[c][tr-1].y,tileW,tileH,tiles[c][tr-1].state);
+                }
+                ctx.clearRect(57*20+20, 34*20, 61*20,36*20);
+                ctx.font = "30px Arial";//Arial
+                ctx.fillStyle = "Black";
+                ctx.fillText("Dragon Hearts:", 57*20+20, 34*20);
+                ctx.fillText(fourHearts, 59*20 - 5,35*20 + 3);
+            }
+        }
+        if(dragonDefeted)
+        {
+            for(var c = tc-tm-1; c < tc; c++)
+            {
+                for(var r = 0;r < tr; r++)
+                {
+                    drawrect(tiles[c][r].x,tiles[c][r].y,tileW,tileH,tiles[c][r].state);
+                }
+            }
         }
         
         changeDragonPosition();
-        drawDragon(1160,cdy);//58*20 = 1160
-        
+        if(!dragonDefeted)
+        {
+            drawDragon(cdx,cdy);//cdx => 58*20 = 1160
+        }
+        Dragonflame(cdy);
     }
-    
 }
+    
 
 function changeDragonPosition()
 {
-    //cleardrag();
     cdy += dv;
-    //console.log(dv);
     if(cdy > (15)*20)
     {
         dv = -dv;
@@ -541,32 +689,141 @@ function changeDragonPosition()
         dv = -dv;
     }
 }
+var dracoSoundDone = false;
+var dhx,dhy,dchoice = [];
+var starty = true;
+var done = true;
+
+function checkSpotForHeart()
+{
+    //{1->6 && 23 to rest(33)} => free slots in y dir for dheart
+    dchoice = [(Math.floor(Math.random()*6) + 1),(Math.floor(Math.random()*11) + 23)];
+    dhy = dchoice[Math.floor(Math.random()*2)];
+    dhx = Math.floor(Math.random()*21) + 37; //tr=37, 37-58
+}
+//https://stackoverflow.com/questions/20339466/how-to-remove-duplicates-from-multidimensional-array
+//This function came in handy
+function multiDimensionalUnique(arr) {
+    var uniques = [];
+    var itemsFound = {};
+    for(var i = 0, l = arr.length; i < l; i++) {
+        var stringified = JSON.stringify(arr[i]);
+        if(itemsFound[stringified]) { continue; }
+        uniques.push(arr[i]);
+        itemsFound[stringified] = true;
+    }
+    return uniques;
+}
+
+function Dragonflame(cdy2)
+{
+    var mouth = Math.floor(cdy2/20) + 7;
+    if(secondPhase && dracoSoundDone)
+    {
+        
+        if(!muted && !isPaused)
+        {
+            dragfire.play();
+        }
+        for(var c = (tc-tm-2);c > tx; c--)
+        {
+            //Fire biforcation{1-6, 23-33}
+            hellflame.push([c,mouth]);
+            tiles[c][mouth].state = 'fir';
+            if(cdy2 == 20)
+            {
+                hellflame.push([c,1]);
+                hellflame.push([c,3]);
+                hellflame.push([c,5]);
+                tiles[c][1].state = 'fir';
+                tiles[c][3].state = 'fir';
+                tiles[c][5].state = 'fir';
+            }
+            if(cdy2 == (15*20))
+            {
+                hellflame.push([c,33]);
+                hellflame.push([c,31]);
+                hellflame.push([c,29]);
+                hellflame.push([c,27]);
+                hellflame.push([c,25]);
+                tiles[c][33].state = 'fir';
+                tiles[c][31].state = 'fir';
+                tiles[c][29].state = 'fir';
+                tiles[c][27].state = 'fir';
+                tiles[c][25].state = 'fir';
+            }
+        }
+        //hellflame = [...new Set(hellflame)];
+        hellflame = multiDimensionalUnique(hellflame);
+        if(starty)
+        {
+            checkSpotForHeart();
+            starty = false;
+        }
+        if(daga && secondPhase)
+        {
+            tiles[dhx][dhy].state = 'drh';
+        }
+        daga = false;
+        for(var i = 0;i < hellflame.length; i++)
+        {
+            if(currX == hellflame[i][0] && currY == hellflame[i][1])
+            {
+                hnum -= 2;//2 => (fDamage/10)
+                hellflame.splice(i,1);
+                document.getElementById('bar').value = hnum.toString();
+                showHealth.innerHTML = document.getElementById('bar').value;
+            }
+        }
+    }
+    if(hnum < 0)
+    {
+        hnum = 0;
+        gameWin = false;
+        nextLevel();
+        scoreBoard();
+    }
+        
+}
 
 var right = false,left = false,up = false,down = false;
 function kd(e)
 {
-    if(!isPanel && !isPaused)
+    if(!isPanel && !isPaused && !scoreB)
     {
         switch(e.keyCode)
-{
-    case 38:
-        up = true;
-        //console.log('up');
-        e.preventDefault();
-        break;
-    case 37:
-        left = true;
-        e.preventDefault();
-        break;
-    case 39:
-        right = true;
-        e.preventDefault();
-        break;
-    case 40:
-        down = true;
-        e.preventDefault();
-        break;
-}
+    {
+        case 38:
+            up = true;
+            //console.log('up');
+            e.preventDefault();
+            break;
+        case 37:
+            left = true;
+            e.preventDefault();
+            break;
+        case 39:
+            right = true;
+            e.preventDefault();
+            break;
+        case 40:
+            down = true;
+            e.preventDefault();
+            break;
+        case 77:  //m for mute
+            if(muted)
+            {
+                muted = false;
+                music.src = music_source;
+                e.preventDefault();
+                break;
+            }else{
+                muted = true;
+                music.src = music_sourceDummy;
+                e.preventDefault();
+                break;
+            }    
+    }
     }
 }
 function ku(e)
@@ -594,7 +851,12 @@ function ku(e)
     }
     }
 }
+function allStop()
+{
+    left = false;right = false;up = false;down = false;
+}
 
+var gotKey = false;
 var starEaten = false;
 var dragE = false;
 var sharp = 0;
@@ -609,6 +871,13 @@ var entleft = 1;
 var hasHit = true;
 var flame = false;
 var verdict = document.getElementById('verdict');
+var once = true;
+var onlyOnce = true;
+var keyone = true;
+var daga = true;
+var gotscroll = false;
+var maponce = true;
+var fourHearts = 0;
 
 function logic()
 {
@@ -616,7 +885,7 @@ function logic()
     {
         tcl = 0;
     }else{
-        tcl = 13;
+        tcl = 13;//13
     }
     if(right && currX < tc-tcl-2 && tiles[currX+1][currY].state != 'w')
     {
@@ -656,15 +925,34 @@ function logic()
             show.innerHTML = index;
             if(starEaten)
             {entleft = tx+1;}
-            tiles[tc-tm-2][tr-2].state = 'f';
-            tiles[tc-tm-3][tr-2].state = 'w';
-            tiles[tc-tm-2][tr-3].state = 'w';
-            tiles[tc-tm-3][tr-3].state = 'w';
+            if(once)
+            {
+                tiles[tc-tm-2][tr-2].state = 'f';
+                tiles[tc-tm-3][tr-2].state = 'w';
+                tiles[tc-tm-2][tr-3].state = 'w';
+                tiles[tc-tm-3][tr-3].state = 'w';
+                once = false;
+            }
+            
+        }
+        if(lvl == 4 && currX == tx-2 && currY == tr-2)
+        {
+            
+            if(!muted && keyone)
+            {
+                keyaud.play();
+                keyone = false;
+            }
         }
     if(lvl == 4)
     {
         if(currX == tc-tm-2 && currY == tr-2)// tc-tm-2
         {
+            
+            if(!muted)
+            {
+                tchest.play();
+            }
             won();
             gameWin = true;
             //dragon();
@@ -673,11 +961,37 @@ function logic()
             return;
         }
     }
-    else{
+    else if(lvl == 3)
+    {
         if(currX == tc-2 && currY == tr-2)
+        {
+            if(gotKey)
+            {
+                won();
+                
+                if(!muted)
+                {
+                    wall_move.play();
+                }
+                show.innerHTML = index;
+                return;
+            }else{
+                alert("Get the key to open the Block!");
+                currX = tc-2;currY = 1;
+                allStop();
+            }
+        }
+    }
+    else{
+        if(currX == tc-2 && currY == tr-2)//tc-2
         {
             won();
             //index = 0;
+            
+            if(!muted)
+            {
+                wall_move.play();
+            }
             show.innerHTML = index;
             return;
         }
@@ -692,6 +1006,11 @@ function logic()
         {
             tiles[currX+1][currY].state = 'e';
             axe--;
+            
+            if(!muted)
+            {
+                breakAud.play();
+            }
             axel.innerHTML = axe;
             pr = false;
         }
@@ -705,6 +1024,11 @@ function logic()
         {
             tiles[currX-1][currY].state = 'e';
             axe--;
+            
+            if(!muted)
+            {
+                breakAud.play();
+            }
             axel.innerHTML = axe;
             pl = false;
         }
@@ -718,6 +1042,11 @@ function logic()
         {
             tiles[currX][currY-1].state = 'e';
             axe--;
+            
+            if(!muted)
+            {
+                breakAud.play();
+            }
             axel.innerHTML = axe;
             pu = false;
         }
@@ -731,6 +1060,11 @@ function logic()
         {
             tiles[currX][currY+1].state = 'e';
             axe--;
+            
+            if(!muted)
+            {
+                breakAud.play();
+            }
             axel.innerHTML = axe;
             pd = false;
         }
@@ -741,12 +1075,22 @@ function logic()
     }
     if(currX == hx && currY == hy)
     {
+        
+        if(!muted)
+        {
+            healthAud.play();
+        }
         index -= 80;
         show.innerHTML = index;
         changeHealth();
     }
     if(currX == bmx && currY == bmy)
     {
+        
+        if(!muted)
+        {
+            bombAud.play();
+        }
         index += 100;
         show.innerHTML = index;
         changeBomb();
@@ -755,6 +1099,11 @@ function logic()
     {
         // index += 100;
         // show.innerHTML = index;
+        
+        if(!muted)
+        {
+            axeAud.play();
+        }
         axe+=2;
         axel.innerHTML = axe;
         useAxe();
@@ -762,12 +1111,22 @@ function logic()
     }
     if(currX == pox && currY == poy)
     {
+        
+        if(!muted)
+        {
+            portalAud.play();
+        }
         currX = pox_2;
         currY = poy_2;
         changePorts();
     }
     if(currX == pox_2 && currY == poy_2)
     {
+        
+        if(!muted)
+        {
+            portalAud.play();
+        }
         currX = pox;
         currY = poy;
         changePorts();
@@ -784,11 +1143,43 @@ function logic()
         player_r.src = plr;
         player_u.src = plu;
         starEaten = true;
+        
+        if(!muted)
+        {
+            pstaradu.play();
+        }
         shuriken.style.display = 'inline';
         healthBar.style.display = 'inline';
-        sharp = 11; //No of Shuriken initially
+        sharp = 20; //No of Shuriken initially 11
         blade.innerHTML = sharp;
         changeStar();
+    }
+    if(currX == kx && currY == ky)
+    {
+        gotKey = true;
+        
+        if(!muted)
+        {
+            keyaud.play();
+        }
+        changeKeys();
+    }
+    if(lvl == 4 && currX == mx && currY == my)
+    {
+        gotscroll = true;   
+        if(!muted)
+        {
+            smoll.play();
+        }
+        if(maponce)
+        {
+            setTimeout(() => {
+                alert("You got the scroll!!.\nPause the game by pressing shift and check out page 5 in instruction page by pressing Enter...");
+                allStop();
+            }, 300);
+            maponce = false;
+        }
+        changeMap();
     }
     if(lvl == 2)
     {
@@ -803,11 +1194,20 @@ function logic()
     {
         checkForEmptyTiles();
         ag = true;
+        // if(!gotKey)
+        // {
+        //     tiles[tc-3][tr-2].state = 'w';
+        //     tiles[tc-2][tr-3].state = 'w';
+        // }else{
+        //     tiles[tc-3][tr-2].state = 'e';
+        //     tiles[tc-2][tr-3].state = 'e';
+        // }
         Bomb();
         health();
         pickaxe();
         portalOne();
         portalTwo();
+        lkey();
         aga = false;
         empt = [];
     }
@@ -815,12 +1215,25 @@ function logic()
     {
         // ag = false;
         // aga = false;
+        if(!dragonDefeted)
+        {
+            if(!isPaused && !muted)
+            {
+                boss_audio.play();
+            }else{
+                boss_audio.pause();
+            }
+        }else{
+            boss_audio.pause();
+        }
+        music.src = music_sourceDummy;
         changeBomb();
         changAxe();
         changeHealth();
         changePorts();
         checkForEmptyTiles();
         star();
+        showMap();
         if(hasCrossed && starEaten){
             tiles[tx-1][tr-2].state = 'w';
             //dv = 1;
@@ -841,9 +1254,18 @@ function logic()
                 
             }
             else{
-                sleep(2000);
                 if(hasHit)
                 {
+                    if(onlyOnce)
+                    {
+                        if(!muted)
+                        {
+                            draco_roar.play();
+                            onlyOnce = false;
+                        }
+                        onlyOnce = false;
+                    }
+                    sleep(3000);
                     dragonAttacks();
                 }
                 else{
@@ -867,6 +1289,7 @@ function logic()
                 hnum -= (fDamage/10);
                 document.getElementById('bar').value = hnum.toString();
                 showHealth.innerHTML = document.getElementById('bar').value;
+                //fireTiles.splice(i,1);
                 if(hnum <= 0){
                     hnum = 0;
                     fDamage = 0;
@@ -888,6 +1311,7 @@ function logic()
     }
     if(lvl == 5)
     {
+        boss_audio.pause();
         scoreBoard();
     }
     blade.innerHTML = sharp;
@@ -897,22 +1321,29 @@ function logic()
     }
 
     tiles[currX][currY].state = 's';
+    //Developer only:
     // tiles[1][2].state = 'e';
+    // gotKey = true;
 }
+var scoreB = false;
 
 function scoreBoard()
 {
     fireTiles =[];
+    secondPhase = false;
     //Stop the timer
     //Total time elapsed
     //Total score from the 4 levels
     //Best score out of the 4 levels
     level.innerHTML = 'Done';
     clearInterval(timer);
-    if(gameWin)
+    if(gameWin && timeWin && hnum > 0)
     {
         ti.innerHTML = 'You Won';
         verdict.innerHTML = "You Won";
+    }else if(gameWin && !timeWin){
+        ti.innerHTML = 'Time Out';
+        verdict.innerHTML = "You Ran Out Of Time";
     }else{
         ti.innerHTML = 'Game Over';
         verdict.innerHTML = "You Lost your Path";
@@ -922,6 +1353,7 @@ function scoreBoard()
     var crd = document.getElementById('crd');
     crd.style.display = 'flex';
     crd.className = 'ctr';
+    scoreB = true;
     let te = document.getElementById('te');
     let ts = document.getElementById('ts');
     let lst = document.getElementById('lst');
@@ -1078,6 +1510,7 @@ function moveInRandomDirection(cx,cy,dir)
             if(dx == 1 && dy == 1)
             {
                 t = false;
+                tiles[1][2].state = 'e';
             }
             //console.log('Backtracked x is: '+dx+'\nBacktracked y is: '+dy);
             visited.pop();
@@ -1154,10 +1587,55 @@ setInterval(logic,100);
 window.addEventListener('keydown',kd);
 window.addEventListener('keyup',ku);
 
+var hellflame = [];
+var healonce = true;
 
+function Dragonreset()
+{
+    secondPhase = true;
+    if(healonce)
+    {
+        hnum += 20;
+        healonce = false;
+    }
+    
+    document.getElementById('bar').value = hnum.toString();
+    showHealth.innerHTML = document.getElementById('bar').value;
+    //{1->6 && 23 to rest(33)} => free slots in y dir for dheart
+    //Have to change this....
+    if(!muted && lvl == 4 && !dragonDefeted)
+    {
+        draco_roar.play();
+    }
+    setTimeout(() => {
+        dracoSoundDone = true;
+    }, 3000);
+    // dHealth = 215;
+    //daralv = false;
+    for(var c = (tc-tm-2);c > tx + 1; c--) {
+        for(var r = 1;r < tr-1;r++)
+        {
+            tiles[c][r].state = 'e';
+        }
+    }
+    tiles[tc-tm-2][tr-2].state = 'f';
+    tiles[tc-tm-3][tr-2].state = 'w';
+    tiles[tc-tm-3][tr-3].state = 'w';
+    tiles[tc-tm-2][tr-3].state = 'w';
+    if(fourHearts >= 4)
+    {afterDragonDefeat();done = false;}
+}
+var dragonDefeted = false;
 function afterDragonDefeat()
 {
-    for(var c = (tc-tm-1);c > tx + 1; c--) {
+    secondPhase = false;
+    if(!muted && done)
+    {
+        victory.play();
+        done = false;
+    }
+    hellflame = [];
+    for(var c = (tc-tm-2);c > tx + 1; c--) {
         for(var r = 1;r < tr-1;r++)
         {
             tiles[c][r].state = 'e';
@@ -1167,6 +1645,7 @@ function afterDragonDefeat()
     tiles[tc-tm-3][tr-2].state = 'e';
     tiles[tc-tm-3][tr-3].state = 'e';
     tiles[tc-tm-2][tr-3].state = 'e';
+    dragonDefeted = true;
 }
 
 var empt = [];
@@ -1242,6 +1721,7 @@ function Bomb()
 
 function changeBomb()
 {
+    //bombAud.pause();
     bmx = '';
     bmy = '';
 }
@@ -1261,11 +1741,22 @@ function changeHealth()
 {
     hx = '';
     hy = '';
+    //healthAud.pause();
 }
 function changeStar()
 {
     stx = '';
     sty = '';
+}
+function changeKeys()
+{
+    kx = '';
+    ky = '';
+}
+function changeMap()
+{
+    mx = '';
+    my = '';
 }
 
 var r3 = Math.floor(Math.random()*1257);
@@ -1295,6 +1786,7 @@ function portalTwo()
 
 function changePorts()
 {
+    //portalAud.pause();
     pox = '';
     poy = '';
     pox_2 = '';
@@ -1317,11 +1809,13 @@ function pickaxe()
 }
 function changAxe()
 {
+    //axeAud.pause();
     pax = '';
     pay = '';
 }
 var r6 = Math.floor(Math.random()*600);
 var stx,sty;
+var atx = tx+1,aty = tr-2;
 
 function star()
 {
@@ -1332,6 +1826,27 @@ function star()
         tiles[stx][sty].state = 'str';
     }
 }
+
+var r7 = Math.floor(Math.random()*600)+600;
+var kx,ky;
+function lkey()
+{
+    if(aga)
+    {
+        kx = empt[r7][0];
+        ky = empt[r7][1];
+        tiles[kx][ky].state = 'key';
+    }
+}
+var mx = 1,my = tr-2;
+function showMap()
+{
+    if(showStar)
+    {
+        tiles[mx][my].state = 'scr';
+    }
+}
+
 var fx;
 var fy;
 
@@ -1366,6 +1881,7 @@ function nextLevel()
 {
     clear();
     lvl++;
+    sharp = 0;
     if(lvl == 4)
     {
         for(var c = 0; c < tx; c++)
@@ -1460,6 +1976,7 @@ function nextLevel()
 moveit('panel');
 moveit('crd');
 moveit('crdp');
+moveit('crde2');
 function moveit(slide)
 {
     dragElement(document.getElementById(slide));
@@ -1507,6 +2024,10 @@ function moveit(slide)
 }
 function hidePanel(hide)
 {
+    if(!uno) {
+        music.src = music_source;
+        uno = true;
+    }
     var hide = document.getElementById(hide);
     hide.style.display = 'none';
     isPanel = false;
@@ -1526,6 +2047,7 @@ function hidePause(hide)
 var isPanel = true;
 var isPaused = false;
 var crdp = document.getElementById('crdp');
+var uno = false;
 
 function showintro(e)
 {
@@ -1533,14 +2055,16 @@ function showintro(e)
     {
         hide.style.display = 'flex';
         isPanel = true;
-        //playing = false;
         e.preventDefault();
     }
     else if((e.keyCode == 13) && isPanel)
     {
+        if (!uno) {
+            music.src = music_source;
+            uno = true;
+        }
         hide.style.display = 'none';
         isPanel = false;
-        //playing = true;
         mazeIntro.className = 'rmv';
         e.preventDefault();
     }
@@ -1551,6 +2075,10 @@ function showpaused(e)
     if((e.keyCode == 16) && !isPaused)
     {
         isPaused = true;
+        if(!muted){
+            pauseaud.play();
+        }
+        music.src = music_sourceDummy;
         crdp.style.display = 'flex';
         crdp.className = 'used';
         clearInterval(timer);
@@ -1560,6 +2088,10 @@ function showpaused(e)
     else if((e.keyCode == 16) && isPaused)
     {
         isPaused = false;
+        if(!muted){
+            pauseaud.play();
+        }
+        music.src = music_source;
         crdp.style.display = 'none';
         crdp.className = '';
         timer = window.setInterval(time, 1000);
@@ -1570,13 +2102,17 @@ function showpaused(e)
 var vx = 1;
 function throwShuriken(e)
 {
-    if(hasCrossed && starEaten)
+    if(hasCrossed && starEaten && !isPaused)
     {
         if(e.keyCode == 32)
         {
             //console.log('cool');
             if(sharp > 0)
             {
+                if(!muted)
+                {
+                    shurikenAud.play();
+                }
                 for(var i = currX+1; i < tc-tm; i++)
                 {
                     if(tiles[i+1][currY].state == 'w')
@@ -1594,6 +2130,8 @@ function throwShuriken(e)
                 sharp--;
                 shurikenAttack();
                 e.preventDefault();
+                hellflame = [];
+                
             }
         }
     }
@@ -1613,33 +2151,56 @@ function throwShuriken(e)
     {
         hasHit = false;
         flame = true;
-        afterDragonDefeat();
+        Dragonreset();
     }
 }
 
 function shurikenAttack()
 {
     //This function is basically a check that did the shuriken hit the dragon/skeleton or not...
-    if(currY == leftoutTile)//currY > 0 && currY < eye
+    if(dHealth > 1 && !secondPhase)
     {
-        dHealth -= 25;
-        fireTiles = [];
-        //console.log(dHealth);
-        if(dHealth < 0){
-            dHealth = 1;
-        }
-        hasHit = true;
-    }else{
-        hnum -= fDamage;
-        document.getElementById('bar').value = hnum.toString();
-        showHealth.innerHTML = document.getElementById('bar').value;
-        if(hnum <= 0)
+        if(currY == leftoutTile)//currY > 0 && currY < eye
         {
-            gameWin = false;
-            nextLevel();
-            scoreBoard();
+            dHealth -= 25;
+            fireTiles = [];
+            //console.log(dHealth);
+            if(dHealth < 0){
+                dHealth = 1;
+            }
+            hasHit = true;
+        }else{
+            hnum -= fDamage;
+            document.getElementById('bar').value = hnum.toString();
+            showHealth.innerHTML = document.getElementById('bar').value;
+            if(hnum <= 0)
+            {
+                gameWin = false;
+                nextLevel();
+                scoreBoard();
+            }
+            console.log("miss");
         }
-        console.log("miss");
+        }
+    if(secondPhase && !dragonDefeted)
+    {
+        //if i have hit the dragon heart then
+        if(currY == dhy)
+        {
+            daga = true;
+            hnum += (fDamage/4);//5
+            fourHearts++;
+            document.getElementById('bar').value = hnum.toString();
+            showHealth.innerHTML = document.getElementById('bar').value;
+            checkSpotForHeart();
+        }
+        else{
+            daga = true;
+            hnum -= (fDamage/4);// 5
+            document.getElementById('bar').value = hnum.toString();
+            showHealth.innerHTML = document.getElementById('bar').value;
+        }
+        // console.log(daga+'The y cordinate is: '+ dhy+'and our y: '+currY);
     }
 }
 
@@ -1670,7 +2231,6 @@ function setTile()
 function dragonAttacks()
 {
     var lt = setTile();
-
     for(var c = (tc-tm-2);c > tx + 1; c--) {
         for(var r = 1;r < tr-1;r++)
         {
@@ -1695,14 +2255,32 @@ function dragonAttacks()
             }
         }
     }
+    //console.log(dHealth);
+    skullAttack();
     tiles[tc-tm-2][tr-2].state = 'f';
     tiles[tc-tm-3][tr-2].state = 'w';
     tiles[tc-tm-2][tr-3].state = 'w';
     tiles[tc-tm-3][tr-3].state = 'w';
-    
     hasHit = false;
     flame = false;
    
+}
+function skullAttack()
+{
+    if(dHealth > 15)
+    {
+        setTimeout(() =>{
+            if(!muted)
+            {
+                skullbf.play();
+            }
+            for(var c = (tc-tm-2);c > tx; c--)
+                {
+                    tiles[c][leftoutTile].state = 'blf';
+                    fireTiles.push([c,leftoutTile]);
+                }
+            },3000);
+    }
 }
 
 var pageContent = document.getElementById('infor');
@@ -1717,22 +2295,27 @@ function Nextpage()
 {
     if(pno == 1)
     {
-        pageNo.innerHTML = '2/4';
+        pageNo.innerHTML = '2/5';
         pno = 2;
     }
     else if(pno == 2)
     {
-        pageNo.innerHTML = '3/4';
+        pageNo.innerHTML = '3/5';
         pno = 3;
     }
     else if(pno == 3)
     {
-        pageNo.innerHTML = '4/4';
+        pageNo.innerHTML = '4/5';
         pno = 4;
     }
     else if(pno == 4)
     {
-        pageNo.innerHTML = '1/4';
+        pageNo.innerHTML = '5/5';
+        pno = 5;
+    }
+    else if(pno == 5)
+    {
+        pageNo.innerHTML = '1/5';
         pno = 1;
     }
     //pageContent.innerHTML = '<h1>Next Page</h1>';
@@ -1743,23 +2326,28 @@ function Prevpage()
 {
     if(pno == 1)
     {
-        pageNo.innerHTML = '4/4';
-        pno = 4;
+        pageNo.innerHTML = '5/5';
+        pno = 5;
     }
     else if(pno == 2)
     {
-        pageNo.innerHTML = '1/4';
+        pageNo.innerHTML = '1/5';
         pno = 1;
     }
     else if(pno == 3)
     {
-        pageNo.innerHTML = '2/4';
+        pageNo.innerHTML = '2/5';
         pno = 2;
     }
     else if(pno == 4)
     {
-        pageNo.innerHTML = '3/4';
+        pageNo.innerHTML = '3/5';
         pno = 3;
+    }
+    else if(pno == 5)
+    {
+        pageNo.innerHTML = '4/5';
+        pno = 4;
     }
     content();
 }
@@ -1781,7 +2369,17 @@ function content()
     }
     else if(pno == 4)
     {
-        pageContent.innerHTML = '<br><br><h2>Press SHIFT to Pause.</h2><hr><br>Also Scroll down and give your feedback on the comment section or just post your score in the comments.';
+        pageContent.innerHTML = '<br><br><h2>Press SHIFT to Pause.</h2><hr><br>Also Scroll down and give your feedback on the comment section or just post your score in the comments.<br>Press m to mute or un-mute the Sound.';
+    }
+    else if(pno == 5)
+    {
+        if(gotscroll)
+        {
+            pageContent.innerHTML = '<br><br><h2>How to Defeat the Dragon</h2><hr><br><span class="bullet">◉</span>Once you Enter the Dragon Arena, Stay there don՚t Move.<br><span class="bullet">◉</span>The Dragon will spawn skulls as its minions and surround the area with dragon fire.<br><span class="bullet">◉</span>Go parallel to them and Press <span id="ze">Enter</span> to throw shuriken and destroy the skull minions.<br><span class="bullet">◉</span>Aiming and Shooting in the wrong direction will cost you 20Hp and the skull minions can also breath blue dragon fire, on getting hit by it you rapidly start loosing helth by standing infront of it<br><span class="bullet">◉</span>Shooting the skull minions lowers the Dragons health. Once the Dragon reaches to the lowest Hp it starts breathing fire.<br><span class="bullet">◉</span>The Dragon has 4 hearts.<br><span class="bullet">◉</span>Destroy them to defeat the dragon once and for all.';
+        }
+        else{
+            pageContent.innerHTML = '<br><br><h4>This Page is torn out.<br>You Wonder what was here...</h4>';
+        } 
     }
 
 }
@@ -1790,6 +2388,15 @@ window.addEventListener('keypress',showintro);
 window.addEventListener('keydown',showpaused);
 
 window.addEventListener('keypress',throwShuriken);
+
+let credit = document.getElementById("crde2");
+
+function showCredits()
+{
+    credit.style.display = "flex";
+    credit.className = "mine";// or credit.classList.add("mine");
+    console.log("Made with ❤️ By Arkaraj");
+}
 
 //forSave = true;
 function Save()
@@ -1815,3 +2422,12 @@ function Save()
         alert("Sorry, We ran into some errors!!\nAlso you can't download the maze as image during the game, save it at the begining...\nEnjoy!!");
     }
 }
+
+/**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+
+    // Replace PAGE_URL with your page's canonical URL variable
+
+    // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+*/
