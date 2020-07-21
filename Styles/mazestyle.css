@@ -19,7 +19,7 @@
 /* #hide.hid{
   display: none;
 } */
-#panel, #crd,#crde,#crde2,#crdp{
+#panel, #crd,#crde,#crde2,#crdp,#crdp2{
   position: fixed; /*absolute will also do*/
   background-color:rgba(52,73,94,0.85);
   color: #fff;
@@ -151,12 +151,21 @@ p>a{
   transform: translateX(30.5vw);
   /* margin: 5px 0px 5px 30vw; */
 }
+#crdp2.duo{
+  position: absolute;
+  align-items: center;
+  z-index: 11;
+  transform: translateX(30.5vw);
+}
+#crdp2header{
+  transform: translateX(50px);
+}
 #hrt{
   width: 100%;
   border-radius: 10px;
   background-color: #2D3246;
 }
-#crdheader,#crdeheader,#crde2header,#crdpheader{
+#crdheader,#crdeheader,#crde2header,#crdpheader,#crdp2header{
   padding: 10px;
   cursor: move;
   z-index: 10;
@@ -212,7 +221,7 @@ p>a{
 #crde2{
   display: none;
 }
-#crde.add,#crde2.mine,#crdp.used{
+#crde.add,#crde2.mine,#crdp.used,#crdp2.duo{
   top: 45%;
 }
 #crde2.mine{
@@ -384,10 +393,11 @@ body.dark{
     background: rgb(44,50,59);
     color:#ffffff;
 }
+
 #name,#fun{
     text-align: right;
 }
-#bn,#bn3,#bnh,#bn1.open,#bnw.open,.dropbtn{
+#bn,#bn3,#bnh,#bn1.open,#bnw.open,.dropbtn,#bnx{
     display: inline;
     border: 1px solid #7CFC00;
     border-radius: 10px;
@@ -402,7 +412,7 @@ body.dark{
     outline: none;
     cursor: url(../Images/pointer2.png),pointer;
 }
-#bn:hover,#bnh:hover{
+#bn:hover,#bnh:hover,#bnx:hover{
     border-color:transparent ;
     background: #00d778;
     padding:10px 40px;
@@ -412,6 +422,15 @@ body.dark{
 #bnh:hover{
   padding:10px 20px;
 }
+#bnx:hover{
+  padding:10px 30px;
+}
+#bnx{
+  margin: 0 40px;
+}
+/* .store{
+  
+} */
 #bn1,#bnw{
     display: none;
 }
@@ -545,4 +564,7 @@ h2{
   background: #eee;
   color:black;
   border-radius: 5px;
+}
+#cypl{
+  display: none;
 }
