@@ -939,7 +939,7 @@ function logic() {
         }
     }
     else if (lvl == 3) {
-        if (currX == 1 && currY == 3) {
+        if (currX == tc - 2 && currY == tr - 2) {
             if (gotKey) {
                 won();
 
@@ -956,7 +956,7 @@ function logic() {
         }
     }
     else {
-        if (currX == 1 && currY == 3)//tc-2
+        if (currX == tc - 2 && currY == tr - 2)//tc-2
         {
             won();
             //index = 0;
@@ -1241,7 +1241,7 @@ function logic() {
     tiles[currX][currY].state = 's';
     //Developer only:
     //tiles[1][2].state = 'e';
-    gotKey = true;
+    //gotKey = true;
 }
 
 let p1won = false;
