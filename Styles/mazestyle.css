@@ -228,7 +228,7 @@ p>a{
   z-index: 12;
   top: 30%;
 }
-#ri,#dwn{
+#ri,#dwn,#rix{
   float: right;
   border: none;
   padding: 2px 7px;
@@ -237,10 +237,17 @@ p>a{
   font-family: 'Chelsea Market', sans-serif;
   cursor: url(../Images/pointer2.png),pointer;
 }
-#ri:hover,#dwn:hover{
+#ri:hover,#dwn:hover,#rix:hover{
   color: #fff;
   background: #2196F3;
   box-shadow: 0 0 15px 0 #2196f3;
+}
+
+#rix{
+  margin: 0 10px;
+}
+.medbuttons{
+  padding: 5px 0;
 }
 
 #heur{

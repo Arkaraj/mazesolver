@@ -939,7 +939,7 @@ function logic() {
         }
     }
     else if (lvl == 3) {
-        if (currX == tc - 2 && currY == tr - 2) {
+        if (currX == 1 && currY == 3) {
             if (gotKey) {
                 won();
 
@@ -956,7 +956,7 @@ function logic() {
         }
     }
     else {
-        if (currX == tc - 2 && currY == tr - 2)//tc-2
+        if (currX == 1 && currY == 3)//tc-2
         {
             won();
             //index = 0;
@@ -1240,8 +1240,8 @@ function logic() {
 
     tiles[currX][currY].state = 's';
     //Developer only:
-    // tiles[1][2].state = 'e';
-    // gotKey = true;
+    //tiles[1][2].state = 'e';
+    gotKey = true;
 }
 
 let p1won = false;
@@ -1388,7 +1388,9 @@ function scoreBoard() {
     crd.style.display = 'flex';
     crd.className = 'ctr';
     scoreB = true;
-    te.innerHTML = timeElapsed + 'sec';
+    let minuteTime = Math.floor(timeElapsed / 60);
+    let secondsTime = timeElapsed % 60;
+    te.innerHTML = minuteTime + ' min and ' + secondsTime + ' seconds<br>' + timeElapsed + 'sec(Total)';
     try {
         ts.innerHTML = sc1;
         lst.innerHTML = Math.max(...scl);
@@ -1693,8 +1695,6 @@ var bmy;
 var hx;
 var hy;
 
-//empt = [];
-
 function Bomb() {
     if (aga) {
         if (ag) {
@@ -1707,7 +1707,6 @@ function Bomb() {
 }
 
 function changeBomb() {
-    //bombAud.pause();
     bmx = '';
     bmy = '';
 }
@@ -1723,7 +1722,6 @@ function health() {
 function changeHealth() {
     hx = '';
     hy = '';
-    //healthAud.pause();
 }
 function changeStar() {
     stx = '';
@@ -1760,7 +1758,6 @@ function portalTwo() {
 }
 
 function changePorts() {
-    //portalAud.pause();
     pox = '';
     poy = '';
     pox_2 = '';
@@ -1779,7 +1776,6 @@ function pickaxe() {
     }
 }
 function changAxe() {
-    //axeAud.pause();
     pax = '';
     pay = '';
 }
@@ -1840,28 +1836,6 @@ function useAxe() {
                 return;
             }
         }
-        //else {
-        //     if (e.keyCode == 68) // d
-        //     {
-        //         sr = true;
-        //         return;
-        //     }
-        //     else if (e.keyCode == 65) // a
-        //     {
-        //         sl = true;
-        //         return;
-        //     }
-        //     else if (e.keyCode == 87) // w
-        //     {
-        //         su = true;
-        //         return;
-        //     }
-        //     else if (e.keyCode == 83) // s
-        //     {
-        //         sd = true;
-        //         return;
-        //     }
-        // }
     });
 }
 
