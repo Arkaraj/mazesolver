@@ -1,3 +1,5 @@
+//For Phone Pickaxe....
+
 var can = document.getElementById('solveMaze');
 var ctx = can.getContext('2d');
 
@@ -19,22 +21,22 @@ var gameWin = false;
 var multiplayer = false;
 var isSetting = true;
 
-var pld = "./Images/player.png", pll = "./Images/player_l.png", plu = "./Images/player_u.png", plr = "./Images/player_r.png";
+var pld, pll, plu, plr;
 
 var mazeIntro = document.getElementById('mazeIntro');
 
 var player = new Image();
 //player.crossOrigin = "anonymous";
-player.src = pld;
+player.src = "./Images/player.png";
 
 var player_r = new Image();
-player_r.src = plr;
+player_r.src = "./Images/player_r.png";
 
 var player_u = new Image();
-player_u.src = plu;
+player_u.src = "./Images/player_u.png";
 
 var player_l = new Image();
-player_l.src = pll;
+player_l.src = "./Images/player_l.png";
 
 var player2_r = new Image();
 
@@ -639,6 +641,13 @@ function draw() {
             }
         }
 
+        if (starEaten) {
+            player.src = "./Images/exptis.png";
+            player_l.src = "./Images/ep_l.png";
+            player_r.src = "./Images/ep_r.png";
+            player_u.src = "./Images/ep_u.png";
+        }
+
         changeDragonPosition();
         if (!dragonDefeted) {
             drawDragon(cdx, cdy);//cdx => 58*20 = 1160
@@ -939,7 +948,7 @@ function logic() {
         }
     }
     else if (lvl == 3) {
-        if (currX == tc - 2 && currY == tr - 2) {
+        if (currX == tc - 2 && currY == tr - 2) {//tc-2
             if (gotKey) {
                 won();
 
@@ -1082,14 +1091,6 @@ function logic() {
     }
     if (currX == stx && currY == sty) {
         //Change player icn
-        pld = "./Images/exptis.png";
-        pll = "./Images/ep_l.png";
-        plu = "./Images/ep_u.png";
-        plr = "./Images/ep_r.png";
-        player.src = pld;
-        player_l.src = pll;
-        player_r.src = plr;
-        player_u.src = plu;
         starEaten = true;
 
         if (!muted) {
@@ -1241,7 +1242,7 @@ function logic() {
     tiles[currX][currY].state = 's';
     //Developer only:
     //tiles[1][2].state = 'e';
-    //gotKey = true;
+    // gotKey = true;
 }
 
 let p1won = false;
@@ -1919,7 +1920,48 @@ function nextLevel() {
 
 }
 
+function hearu() {
+    up = true;
+}
+function releaseu() {
+    up = false;
+}
+function hearr() {
+    right = true;
+}
+function releaser() {
+    right = false;
+}
+function hearl() {
+    left = true;
+}
+function releasel() {
+    left = false;
+}
+function heard() {
+    down = true;
+}
+function released() {
+    down = false;
+}
+function hearx() {
+    Spacebar = true;
+    throwShuriken();
+}
+function releasex() {
+    Spacebar = false;
+}
+
 //From mazesolver.js
+
+setTimeout(detectMob, 0);
+
+function detectMob() {
+    if (typeof window.orientation !== 'undefined') {
+        alert("Plese Auto rotate your Phone to play...");
+        document.getElementById('phoneButtons').style.display = 'grid';
+    }
+}
 
 
 moveit('panel');
@@ -2050,9 +2092,10 @@ function showpaused(e) {
     }
 }
 var vx = 1;
+var Spacebar = false;
 function throwShuriken(e) {
-    if (hasCrossed && starEaten && !isPaused) {
-        if (e.keyCode == 32) {
+    if (hasCrossed && starEaten && !isPaused && lvl == 4) {
+        if (Spacebar || e.keyCode == 32) {
             //console.log('cool');
             if (sharp > 0) {
                 if (!muted) {

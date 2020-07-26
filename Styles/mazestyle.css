@@ -279,6 +279,9 @@ p>a{
     /* max-width: 100%; */
     font-size: 1rem;
   }
+  body#full{
+    max-width: 100%;
+  }
   .btns{
     margin-right: -40vw;
   }
@@ -574,4 +577,34 @@ h2{
 }
 #cypl{
   display: none;
+}
+#phoneButtons{
+  /* position: fixed;  */
+
+  background-color:rgba(52,73,94,0.85);
+  display: none;
+  grid-template-columns: auto auto auto;
+  grid-column-gap: 40px;
+  grid-row-gap: 2px;
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  height:auto;
+  padding:0px;
+  width: 200px;
+  margin: 0 20px;
+  transform: translateY(-150px);
+  z-index: 50;
+}
+.pb{
+  left: 10px;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  border: none;
+  color: #fff;
+  text-align: center;
+  background-color: rgba(60,231,139,0.5);
+  outline: none;
+  z-index: 90;
 }

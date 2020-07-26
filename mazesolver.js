@@ -620,15 +620,15 @@ setTimeout(() => {
     let name = prompt("What should we call you?", "Enter");
     if (name == null || name == "" || name == "Enter") {
         name = usr[rnd]; //Gamer,person,User anything
-        document.getElementById('name').innerHTML = 'Welcome!' + ' ' + name;
+        document.getElementById('name').innerText = 'Welcome!' + ' ' + name;
     }
     else if (name == "Arkaraj") {
-        document.getElementById('name').innerHTML = 'Welcome!' + ' ' + "Creator";
+        document.getElementById('name').innerText = 'Welcome!' + ' ' + "Creator";
         hidePanel('hide');
         Visual = false;
     }
     else {
-        document.getElementById('name').innerHTML = 'Welcome!' + ' ' + name;
+        document.getElementById('name').innerText = 'Welcome!' + ' ' + name;
     }
 }, 1);
 

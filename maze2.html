@@ -9,7 +9,7 @@
     <title>Maze</title>
 </head>
 
-<body class="dark" style="max-width: 100%;">
+<body class="dark" id="full">
     <t id="hide">
         <div id="panel">
             <div id="mydivheader">
@@ -175,14 +175,25 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span id='cyrh' style="display: none;">Health: <progress id="bar" value="100" max="100"
                     min="0">100%</progress><span id="hbar">100</span>/100</span>
-            <span id='cypl'>Move P1: <span id="show2">0</span></span>
+            <span id='cypl'>Move P2: <span id="show2">0</span></span>
             <span id='spac'>Moves: <span id="show">0</span></span>
         </div>
         <canvas id="mazeIntro" width="600" height="853"></canvas>
         <canvas id="solveMaze" width="1420" height="740"></canvas>
+        <div id="phoneButtons">
+            <button class="pb" ontouchstart="hearu()" ontouchend="releaseu()">w</button>
+            <button class="pb" ontouchstart="hearu()" ontouchend="releaseu()">▲</button>
+            <button class="pb" ontouchstart="hearr()" ontouchend="releaser()">d</button>
+            <button class="pb" ontouchstart="hearl()" ontouchend="releasel()">◀︎</button>
+            <button class="pb" ontouchstart="hearx()" ontouchend="releasex()">x</button>
+            <button class="pb" ontouchstart="hearr()" ontouchend="releaser()">▶︎</button>
+            <button class="pb" ontouchstart="hearl()" ontouchend="releasel()">a</button>
+            <button class="pb" ontouchstart="heard()" ontouchend="released()">▼</button>
+            <button class="pb" ontouchstart="heard()" ontouchend="released()">s</button>
+        </div>
         <div class="btns2">
-            <button id="bt1" style="background:url(./Images/player.png)"></button>Start
-            <button id="bt4" style="background:url(./Images/stairs.png)"></button>Finish
+            <button id="bt1" style="background:url(./Images/player.png) no-repeat"></button>Start
+            <button id="bt4" style="background:url(./Images/stairs.png) no-repeat"></button>Finish
         </div>
     </center>
     <button id="dwn" onclick="Save()"><img src="https://img.icons8.com/ios/24/000000/downloads-folder.png" />Download as

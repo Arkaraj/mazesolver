@@ -244,6 +244,14 @@ form {
 	margin: 20px 0;
 }
 
+#line{
+	height: 0;
+	margin-top: 7px;
+	padding: 0px 40px;
+	border-radius: 100%;
+	border-bottom: 3px solid #fff;
+}
+
 /* Not sure */
 
 .form .input-group input{
