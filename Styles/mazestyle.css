@@ -578,12 +578,11 @@ h2{
 #cypl{
   display: none;
 }
-#phoneButtons{
-  /* position: fixed;  */
-
-  background-color:rgba(52,73,94,0.85);
+#phoneButtons,#phoneButtons2{
+  /* rgba(52,73,94,0.85); */
+  background-color:rgba(255,255,255,0.1);
   display: none;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto;
   grid-column-gap: 40px;
   grid-row-gap: 2px;
   color: #fff;
@@ -596,15 +595,19 @@ h2{
   transform: translateY(-150px);
   z-index: 50;
 }
+#phoneButtons2{
+  transform: translate(1200px,-300px);
+  grid-template-columns: auto auto;
+}
 .pb{
   left: 10px;
-  height: 32px;
-  width: 32px;
+  height: 72px;
+  width: 72px;
   border-radius: 50%;
   border: none;
   color: #fff;
   text-align: center;
-  background-color: rgba(60,231,139,0.5);
+  background-color: rgba(60,231,139,0.6);
   outline: none;
   z-index: 90;
 }

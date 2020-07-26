@@ -1960,6 +1960,7 @@ function detectMob() {
     if (typeof window.orientation !== 'undefined') {
         alert("Plese Auto rotate your Phone to play...");
         document.getElementById('phoneButtons').style.display = 'grid';
+        document.getElementById('phoneButtons2').style.display = 'grid';
     }
 }
 
