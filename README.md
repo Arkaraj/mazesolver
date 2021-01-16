@@ -17,7 +17,7 @@ Copy the icons content produced by it. Also an icon folder will be created.
 ## For running, PWA 
 
 ```sh
-$ npx server
+$ npx serve
 ```
 
 Goto server 5000 :rocket:
