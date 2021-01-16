@@ -530,6 +530,7 @@ function randomaze(n = 320) {
         //slider.value = 320;
         n = parseInt(slider.value);
     }
+    ClearWalls();
     n = parseInt(slider.value);
     console.log(n);
     var stc = parseInt(document.getElementById('s1').value);

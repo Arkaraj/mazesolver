@@ -9,6 +9,7 @@
     <!-- <link rel="apple-touch-icon" href="mazeicnw.png"> -->
     <!-- <style>#maze{background: black;}</style> -->
     <link rel="stylesheet" type="text/css" href="./Styles/mazestyle.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
@@ -164,6 +165,20 @@
         ©2020 ARKARAJ
     </footer>
     <script src="./mazesolver.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(reg => {
+                        console.log('Registration succeeded. Scope is ' + reg.scope);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+
+    </script>
 </body>
 
 </html>

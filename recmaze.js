@@ -990,9 +990,10 @@ function logic() {
                 }
                 axel.innerHTML = axe;
                 pr = false;
+                return;
             }
             else {
-
+                return;
             }
         }
         if (pl) {
@@ -1005,9 +1006,10 @@ function logic() {
                 }
                 axel.innerHTML = axe;
                 pl = false;
+                return;
             }
             else {
-
+                return;
             }
         }
         if (pu) {
@@ -1020,9 +1022,10 @@ function logic() {
                 }
                 axel.innerHTML = axe;
                 pu = false;
+                return;
             }
             else {
-
+                return;
             }
         }
         if (pd) {
@@ -1037,7 +1040,7 @@ function logic() {
                 pd = false;
             }
             else {
-
+                return;
             }
         }
     }
