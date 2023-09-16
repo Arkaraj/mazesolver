@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login</title>
+	<link rel="shortcut icon" href="./Images/mazeicnw.png" type="image/png">
+	<link rel="stylesheet" href="./Styles/style2.css">
+</head>
+
+<body style="background: url(./Images/Maze_bg.jpg) no-repeat top center fixed;background-size: cover ">
+	<!--https://www.youtube.com/watch?v=mUdo6w87rh4-->
+	<div class="container" id="container">
+		<div class="form-container sign-up-container">
+			<form action="#">
+				<h1>Create Account</h1>
+				<div class="simple-space">
+				</div>
+				<input type="text" id="input" placeholder="Name" required />
+				<input type="email" id="input" placeholder="Email" required />
+				<input type="password" id="input" placeholder="Password" required />
+				<button>Sign Up</button>
+			</form>
+		</div>
+		<div class="form-container sign-in-container">
+			<form action="#" class="form" method="POST">
+				<h1>Log In</h1>
+				<div class="simple-space"></div>
+				<div class="input-group">
+					<span><img src="https://img.icons8.com/cotton/32/000000/difficult-decision.png" alt="User"
+							title="Maze-Maker" /></span>
+					<input type="text" name="loginusr" id="loginusr" required>
+					<label for="loginusr">Username</label>
+				</div>
+				<div class="input-group">
+					<span><img src="./Images/maze_lock.jpg" alt="password" alt=""></span>
+					<input type="password" name="loginp" id="loginp" required>
+					<label for="loginp">Password</label>
+				</div>
+				<!-- <div class="simple-space"></div> -->
+				<button>Sign In</button>
+				<!-- <a href="Maze-solver.html">Sign In</a> -->
+				<div class="rem">
+					<input type="checkbox" name="remember">
+					<t>Remember me</t>
+				</div>
+			</form>
+		</div>
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-left">
+					<h1>Welcome Back!</h1>
+					<div id="line"></div>
+					<p>To keep connected with us please login with your personal info</p>
+					<button class="ghost" id="signIn">Log In</button>
+				</div>
+				<div class="overlay-panel overlay-right">
+					<h1>Hello, Solvers!</h1>
+					<div id="line"></div>
+					<p>Enter your details to Login in and play</p>
+					<button class="ghost" id="signUp">Sign Up</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <script src="https://kit.fontawesome.com/a81368914c.js"></script> -->
+	<script>
+		const signUpButton = document.getElementById('signUp');
+		const signInButton = document.getElementById('signIn');
+		const container = document.getElementById('container');
+
+		signUpButton.addEventListener('click', () => {
+			container.classList.add("right-panel-active");
+		});
+
+		signInButton.addEventListener('click', () => {
+			container.classList.remove("right-panel-active");
+		});
+	</script>
+</body>
+
+</html>
