@@ -1,1 +1,1 @@
-<?php include_once("Maze-solver.html") ?>
+<?php include_once("index.html") ?>
